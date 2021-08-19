@@ -21,12 +21,7 @@ const TodoList = ({ toggleTodo, removeTodo, todos }: TodoListProps) => {
     <TodoListBlock>
       {todos &&
         todos.map((todo) => (
-          <TodoItem
-            toggleTodo={toggleTodo}
-            removeTodo={removeTodo}
-            key={todo.id}
-            todo={todo}
-          />
+          <TodoItem toggleTodo={toggleTodo} removeTodo={removeTodo} key={todo.id} todo={todo} />
         ))}
     </TodoListBlock>
   );

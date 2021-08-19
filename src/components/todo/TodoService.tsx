@@ -30,9 +30,7 @@ export const useTodo = () => {
   };
 
   const removeTodo = (id: number) => {
-    setTodoState((prevState) =>
-      prevState.filter((todo: Itodo) => todo.id === id)
-    );
+    setTodoState((prevState) => prevState.filter((todo: Itodo) => todo.id === id));
   };
 
   const createTodo = (todo: Itodo) => {
@@ -40,7 +38,7 @@ export const useTodo = () => {
     setTodoState((prevState) =>
       prevState.concat({
         ...todo,
-        id: nextId
+        id: nextId,
       })
     );
   };
@@ -65,6 +63,6 @@ export const useTodo = () => {
     incrementNextId,
     toggleTodo,
     removeTodo,
-    createTodo
+    createTodo,
   };
 };
