@@ -15,6 +15,12 @@ const TodoCreate = ({ nextId, createTodo, incrementNextId }: TodoCreateProps) =>
   const [value, setValue] = useState("");
   const [dueDateValue, setDueDateValue] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+  const ALERT_MESSAGE = {
+    INPUT_NULL: "해야 할 일을 입력해주세요.",
+    INPUT_SPACE: "공백만 입력되었습니다.",
+    DATE_NULL: "목표일을 설정해주세요.",
+  };
 
   const handleDate = (date: any, dateString: any) => {
     setDueDateValue(dateString);
@@ -25,8 +31,21 @@ const TodoCreate = ({ nextId, createTodo, incrementNextId }: TodoCreateProps) =>
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // 새로고침 방지
 
-    if (!value) return setIsModalVisible(true);
-    if (!dueDateValue) return setIsModalVisible(true);
+    if (!value) {
+      setAlertMessage(ALERT_MESSAGE.INPUT_NULL);
+      return setIsModalVisible(true);
+    }
+
+    var blank_pattern = /^\s+|\s+$/g;
+    if (value.replace(blank_pattern, "") == "") {
+      setAlertMessage(ALERT_MESSAGE.INPUT_SPACE);
+      return setIsModalVisible(true);
+    }
+
+    if (!dueDateValue) {
+      setAlertMessage(ALERT_MESSAGE.DATE_NULL);
+      return setIsModalVisible(true);
+    }
 
     createTodo({
       id: nextId,
@@ -67,7 +86,7 @@ const TodoCreate = ({ nextId, createTodo, incrementNextId }: TodoCreateProps) =>
             centered={true}
             width="300px"
             bodyStyle={{ textAlign: "center" }}>
-            <span>할 일과 목표일 모두 입력해주세요!</span>
+            <span>{alertMessage}</span>
           </Modal>
         </InsertForm>
       </InsertFormPositioner>
