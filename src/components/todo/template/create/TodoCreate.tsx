@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { DatePicker, Modal } from "antd";
 import { PlusCircleOutlined } from "@ant-design/icons";
 import { Itodo } from "components/todo/TodoService";
+import { ALERT_MESSAGE } from "utils/constants";
 
 interface TodoCreateProps {
   nextId: number;
@@ -16,11 +17,6 @@ const TodoCreate = ({ nextId, createTodo, incrementNextId }: TodoCreateProps) =>
   const [dueDateValue, setDueDateValue] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
-  const ALERT_MESSAGE = {
-    INPUT_NULL: "해야 할 일을 입력해주세요.",
-    INPUT_SPACE: "공백만 입력되었습니다.",
-    DATE_NULL: "목표일을 설정해주세요.",
-  };
 
   const handleDate = (date: any, dateString: any) => {
     setDueDateValue(dateString);
@@ -36,8 +32,8 @@ const TodoCreate = ({ nextId, createTodo, incrementNextId }: TodoCreateProps) =>
       return setIsModalVisible(true);
     }
 
-    var blank_pattern = /^\s+|\s+$/g;
-    if (value.replace(blank_pattern, "") == "") {
+    const blankSpace = /^\s+|\s+$/g;
+    if (value.replace(blankSpace, "") === "") {
       setAlertMessage(ALERT_MESSAGE.INPUT_SPACE);
       return setIsModalVisible(true);
     }
