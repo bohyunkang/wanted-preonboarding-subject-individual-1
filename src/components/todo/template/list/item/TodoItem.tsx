@@ -1,7 +1,8 @@
+import React, { useState } from "react";
+import styled, { css } from "styled-components";
+import { Modal } from "antd";
 import { CheckOutlined, DeleteOutlined } from "@ant-design/icons";
 import { Itodo } from "components/todo/TodoService";
-import React from "react";
-import styled, { css } from "styled-components";
 
 const Remove = styled.div`
   display: flex;
@@ -71,12 +72,23 @@ interface TodoItemProps {
 }
 
 const TodoItem = ({ toggleTodo, removeTodo, todo }: TodoItemProps) => {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
   const handleToggle = () => {
     return toggleTodo(todo.id);
   };
 
   const handleRemove = () => {
-    return removeTodo(todo.id);
+    !todo.done ? setIsModalVisible(true) : removeTodo(todo.id);
+  };
+
+  const handleModalOk = () => {
+    removeTodo(todo.id);
+    setIsModalVisible(false);
+  };
+
+  const handleModalCancel = () => {
+    setIsModalVisible(false);
   };
 
   return (
@@ -89,6 +101,21 @@ const TodoItem = ({ toggleTodo, removeTodo, todo }: TodoItemProps) => {
       <Remove onClick={handleRemove}>
         <DeleteOutlined />
       </Remove>
+      <Modal
+        visible={isModalVisible}
+        onOk={handleModalOk}
+        onCancel={handleModalCancel}
+        okText="삭제"
+        cancelText="취소"
+        okButtonProps={{ danger: true }}
+        centered={true}
+        width="300px"
+        bodyStyle={{ textAlign: "center" }}>
+        <span>
+          아직 완료하지 않은 항목입니다! <br />
+          그래도 삭제하시겠습니까?
+        </span>
+      </Modal>
     </TodoItemBlock>
   );
 };
