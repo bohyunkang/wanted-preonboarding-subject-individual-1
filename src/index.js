@@ -3,12 +3,6 @@ import ReactDOM from "react-dom";
 import { createGlobalStyle } from "styled-components";
 import App from "./App";
 
-const GlobalStyle = createGlobalStyle`
-  body {
-    background: #eeeeee;
-  }
-`;
-
 ReactDOM.render(
   <>
     <GlobalStyle />
@@ -16,3 +10,9 @@ ReactDOM.render(
   </>,
   document.getElementById("root")
 );
+
+const GlobalStyle = createGlobalStyle`
+  body {
+    background: #eeeeee;
+  }
+`;

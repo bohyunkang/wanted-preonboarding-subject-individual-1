@@ -2,6 +2,22 @@ import React from "react";
 import styled from "styled-components";
 import moment from "moment";
 
+const TodoHead = () => {
+  //@TODO 현재 시간을 표시해야합니다.
+  const currentDate = moment().format("LL");
+  const dayOfWeek = moment().format("dddd");
+
+  const dayString = dayOfWeek;
+  const dateString = currentDate;
+
+  return (
+    <TodoHeadBlock>
+      <DayText>{dayString}</DayText>
+      <DateText>{dateString}</DateText>
+    </TodoHeadBlock>
+  );
+};
+
 const TodoHeadBlock = styled.div`
   display: flex;
   justify-content: center;
@@ -21,21 +37,5 @@ const DayText = styled.div`
   color: #119955;
   padding-top: 5px;
 `;
-
-const TodoHead = () => {
-  //@TODO 현재 시간을 표시해야합니다.
-  const currentDate = moment().format("LL");
-  const dayOfWeek = moment().format("dddd");
-
-  const dayString = dayOfWeek;
-  const dateString = currentDate;
-
-  return (
-    <TodoHeadBlock>
-      <DayText>{dayString}</DayText>
-      <DateText>{dateString}</DateText>
-    </TodoHeadBlock>
-  );
-};
 
 export default React.memo(TodoHead);
