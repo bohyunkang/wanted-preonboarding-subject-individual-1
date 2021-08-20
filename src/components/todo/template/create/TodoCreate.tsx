@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { DatePicker } from "antd";
 import { PlusCircleOutlined } from "@ant-design/icons";
 import { Itodo } from "components/todo/TodoService";
 
@@ -28,6 +29,7 @@ const InsertFormPositioner = styled.div`
 
 const InsertForm = styled.form`
   display: flex;
+  justify-content: center;
   background: #eeeeee;
   padding-left: 40px;
   padding-top: 36px;
@@ -36,9 +38,10 @@ const InsertForm = styled.form`
 `;
 
 const Input = styled.input`
+  margin-right: 20px;
   padding: 12px;
   border: 1px solid #dddddd;
-  width: 100%;
+  width: 70%;
   outline: none;
   font-size: 21px;
   box-sizing: border-box;
@@ -58,7 +61,11 @@ interface TodoCreateProps {
 const TodoCreate = ({ nextId, createTodo, incrementNextId }: TodoCreateProps) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
+  const [dueDateValue, setDueDateValue] = useState("");
 
+  const handleDate = (date: any, dateString: any) => {
+    setDueDateValue(dateString);
+  };
   const handleToggle = () => setOpen(!open);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => setValue(e.target.value);
 
@@ -69,6 +76,7 @@ const TodoCreate = ({ nextId, createTodo, incrementNextId }: TodoCreateProps) =>
       id: nextId,
       text: value,
       done: false,
+      dueDate: dueDateValue,
     });
     incrementNextId(); // nextId 하나 증가
 
@@ -82,11 +90,11 @@ const TodoCreate = ({ nextId, createTodo, incrementNextId }: TodoCreateProps) =>
         <InsertForm onSubmit={handleSubmit}>
           <Input
             autoFocus
-            placeholder="What's need to be done?"
+            placeholder="해야 할 일을 적어주세요 ✍"
             onChange={handleChange}
             value={value}
           />
-
+          <DatePicker onChange={handleDate} placeholder="목표일 설정 🙌" />
           <CircleButton onClick={handleToggle} open={open}>
             <PlusCircleOutlined />
           </CircleButton>
