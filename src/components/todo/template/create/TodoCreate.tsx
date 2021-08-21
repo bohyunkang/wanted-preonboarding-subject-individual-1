@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import moment from "moment";
 import { DatePicker, Modal } from "antd";
 import { PlusCircleOutlined } from "@ant-design/icons";
 import { Itodo } from "components/todo/TodoService";
@@ -17,6 +18,10 @@ const TodoCreate = ({ nextId, createTodo, incrementNextId }: TodoCreateProps) =>
   const [dueDateValue, setDueDateValue] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
+
+  const disabledDate = (current: any) => {
+    return current && current < moment().endOf("day").subtract(1, "d");
+  };
 
   const handleDate = (date: any, dateString: any) => {
     setDueDateValue(dateString);
@@ -69,7 +74,11 @@ const TodoCreate = ({ nextId, createTodo, incrementNextId }: TodoCreateProps) =>
             onChange={handleChange}
             value={value}
           />
-          <DatePicker onChange={handleDate} placeholder="목표일 설정 🙌" />
+          <DatePicker
+            onChange={handleDate}
+            disabledDate={disabledDate}
+            placeholder="목표일 설정 🙌"
+          />
           <CircleButton onClick={handleToggle} open={open}>
             <PlusCircleOutlined />
           </CircleButton>
